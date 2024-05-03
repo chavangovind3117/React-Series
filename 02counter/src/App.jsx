@@ -24,7 +24,7 @@ function App() {
       <h2>counter value: {counter}</h2>
 
       <button onClick={increment}>
-        Incremetn
+        Increment
       </button>
 
       <button onClick={Decrement}>
