@@ -59,7 +59,9 @@ export default function Post() {
                     <h1 className="text-2xl font-bold">{post.title}</h1>
                 </div>
                 <div className="browser-css">
-                    {parse(post.content)}
+                    {/* { console.log("postconten: ", post.content)  } */}
+                    {/* for parsing there must be a string to parse so i enclosed it in backticks to avoid syntax error */}
+                    {parse(`${post.content}`)}
                 </div>
             </Container>
         </div>

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 
 const PostForm = ({ post }) => {
     console.log("post : ", post)
-    console.log(post.title)
+
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
             title: post?.title || "",
@@ -16,9 +16,10 @@ const PostForm = ({ post }) => {
             status: post?.status || "active",
         },
     })
-
+    console.log("postTitle:", post?.title)
     const navigate = useNavigate()
     const userData = useSelector(state => state.auth?.userData);
+    console.log("user/da==:", userData)
 
 
     const submit = async (data) => {
@@ -39,15 +40,19 @@ const PostForm = ({ post }) => {
             }
         } else {
             // TODO : improve the code => first check file is present ? upload : null
-            const file = await appwriteService.uploadFile(data.image[0]);
+            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
             if (file) {
                 const fileId = file?.$id
+                console.log("fileId:", fileId)
                 data.featuredImage = fileId
+                console.log("data", data)
+                console.log("userData:", userData)
                 const dbPost = await appwriteService.createPost({
                     ...data,
                     userId: userData?.$id,
                 })
+                console.log("dbpost:", dbPost)
 
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`)
